@@ -6,33 +6,57 @@ const UpdateModel = () => {
   const data = useLoaderData();
   const model = data.result;
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   const formData = {
+  //     name: e.target.name.value,
+  //     category: e.target.category.value,
+  //     description: e.target.description.value,
+  //     thumbnail: e.target.thumbnail.value,
+  //   };
+
+  //   fetch(`https://3d-model-server.vercel.app/models/${model._id}`, {
+  //     method: "PUT",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(formData),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       toast.success("Successfully updated!");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const formData = {
       name: e.target.name.value,
       category: e.target.category.value,
       description: e.target.description.value,
       thumbnail: e.target.thumbnail.value,
-    };
+    }
 
-    fetch(`https://3d-model-server.vercel.app/models/${model._id}`, {
+    fetch(`http://localhost:3000/models/${model._id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(formData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        toast.success("Successfully updated!");
+      body: JSON.stringify(formData)
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data)
+        toast.success('Successfully updated!')
       })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+      .catch(error => {
+        console.log(error.message)
+      })
+  }
 
   return (
     <div className="card bg-base-100 w-full max-w-md mx-auto shadow-2xl rounded-2xl">
@@ -103,7 +127,7 @@ const UpdateModel = () => {
 
           {/* Submit Button */}
           <button
-       
+
             type="submit"
             className="btn w-full text-white mt-6 rounded-full bg-linear-to-r from-pink-500 to-red-600 hover:from-pink-600 hover:to-red-700"
           >

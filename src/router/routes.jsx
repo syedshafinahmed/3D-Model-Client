@@ -50,7 +50,7 @@ export const router = createBrowserRouter([
             <ModelDetails />
           </PrivateRoute>
         ),
-        loader: ({ params }) => fetch(`http://localhost:3000/models/${params.id}`) 
+        loader: ({ params }) => fetch(`http://localhost:3000/models/${params.id}`)
       },
 
       {
@@ -78,7 +78,7 @@ export const router = createBrowserRouter([
             <UpdateModel />
           </PrivateRoute>
         ),
-        loader: ({ params }) => fetch(`https://3d-model-server.vercel.app/models/${params.id}`)
+        loader: ({ params }) => fetch(`http://localhost:3000/models/${params.id}`)
       },
       {
         path: "/auth/login",

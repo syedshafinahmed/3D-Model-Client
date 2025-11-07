@@ -153,13 +153,13 @@ const ModelDetails = () => {
                 Update Model
               </Link>
               <button
-                onClick={handleDownload}
+                // onClick={handleDownload}
                 className="btn btn-secondary rounded-full"
               >
                 Download
               </button>
               <button
-                onClick={handleDlete}
+                // onClick={handleDlete}
                 className="btn btn-outline rounded-full border-gray-300 hover:border-pink-500 hover:text-pink-600"
               >
                 Delete
