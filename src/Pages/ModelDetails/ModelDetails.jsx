@@ -8,6 +8,8 @@ const ModelDetails = () => {
   const data = useLoaderData();
   const model = data.result;
   console.log(model);
+  const navigate = useNavigate();
+
   // const navigate = useNavigate();
   // const { id } = useParams();
   // const [model, setModel] = useState({});
@@ -114,6 +116,40 @@ const ModelDetails = () => {
   //   return <div> Loading...</div>;
   // }
 
+  const handleDlete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:3000/models/${model._id}`, {
+          method: "DELETE",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }).then(res => res.json())
+          .then(data => {
+            console.log(data)
+            navigate('/all-models')
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your model has been deleted.",
+              icon: "success"
+            });
+          })
+          .catch(error => {
+            console.log(error.message)
+          })
+
+      }
+    });
+  }
+
   return (
     <div className="max-w-5xl mx-auto p-4 md:p-6 lg:p-8">
       <div className="card bg-base-100 shadow-xl border border-gray-200 rounded-2xl overflow-hidden">
@@ -159,7 +195,7 @@ const ModelDetails = () => {
                 Download
               </button>
               <button
-                // onClick={handleDlete}
+                onClick={handleDlete}
                 className="btn btn-outline rounded-full border-gray-300 hover:border-pink-500 hover:text-pink-600"
               >
                 Delete
