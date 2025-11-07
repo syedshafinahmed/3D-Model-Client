@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        loader: () => fetch('https://3d-model-server.vercel.app/latest-models')
+        loader: () => fetch('http://localhost:3000/latest-models')
       },
       {
         path: "/all-models",
