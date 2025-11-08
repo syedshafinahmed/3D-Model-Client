@@ -1,10 +1,12 @@
-import { use } from "react";
+import { use, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 import { FaGoogle } from "react-icons/fa";
+import { BeatLoader } from "react-spinners";
 
 const Login = () => {
   const { signInUser, signInWithGoogle } = use(AuthContext);
+  const [loading, setLoading] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -12,6 +14,7 @@ const Login = () => {
 
   const handleLogIn = (event) => {
     event.preventDefault();
+    setLoading(true);
     const email = event.target.email.value;
     const password = event.target.password.value;
 
@@ -38,13 +41,18 @@ const Login = () => {
       });
   };
 
+  if (loading) {
+    return <div className="flex justify-center items-center min-h-screen">
+      <BeatLoader color="#db2777" />
+    </div>
+  }
   return (
     <div className="card bg-base-100  w-full mx-auto max-w-sm shrink-0 shadow-2xl border border-gray-200">
       <div className="card-body">
         <h1 className="text-3xl font-bold text-center">Login</h1>
         <form onSubmit={handleLogIn}>
           <fieldset className="fieldset">
-   
+
             <label className="label">Email</label>
             <input
               type="email"
@@ -57,7 +65,7 @@ const Login = () => {
             <input
               type="password"
               name="password"
-               className="input rounded-full focus:border-0 focus:outline-gray-200"
+              className="input rounded-full focus:border-0 focus:outline-gray-200"
               placeholder="Password"
             />
             <div>
@@ -81,7 +89,7 @@ const Login = () => {
             className="text-blue-500 hover:text-blue-800"
             to="/auth/register"
           >
-             Register
+            Register
           </Link>
         </p>
       </div>
