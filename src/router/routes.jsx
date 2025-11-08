@@ -50,7 +50,6 @@ export const router = createBrowserRouter([
             <ModelDetails />
           </PrivateRoute>
         ),
-        loader: ({ params }) => fetch(`http://localhost:3000/models/${params.id}`)
       },
 
       {
