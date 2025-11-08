@@ -12,17 +12,18 @@ const NavBar = () => {
   const { user, signOutUser } = use(AuthContext);
 
   const [theme, setTheme] = useState(localStorage.getItem('theme') || "light")
+  const handleTheme = (checked) => {
+    setTheme(checked ? "dark" : "light")
+  }
 
   useEffect(() => {
     const html = document.querySelector('html')
-     html.setAttribute("data-theme", theme)
-     localStorage.setItem("theme", theme)
+    html.setAttribute("data-theme", theme)
+    localStorage.setItem("theme", theme)
   }, [theme])
 
 
-  const handleTheme = (checked) => {
-    setTheme(checked ? "dark": "light")
-  }
+
   return (
     <div className="navbar py-0 min-h-0 z-1 shadow-sm rounded-full glass-card max-w-7xl">
       <div className="navbar-start">
@@ -80,10 +81,10 @@ const NavBar = () => {
           </li>
           <li>
             <NavLink to={"/add-model"}>
-             <ImBoxAdd /> Add model
+              <ImBoxAdd /> Add model
             </NavLink>
           </li>
-{/* 
+          {/* 
           <li>
             <NavLink to={"/profile"}>
               <FaUser /> Profile
@@ -129,30 +130,31 @@ const NavBar = () => {
 
               <li >
                 <Link to={"/my-downloads"}>
-                 My Downloads
+                  My Downloads
                 </Link>
               </li>
 
-              <input
-           onChange={(e)=> handleTheme(e.target.checked)}
-           type="checkbox"
-           defaultChecked={localStorage.getItem('theme') === "dark"}
-           className="toggle"/>
-              
+
+              <label className="flex items-center gap-2 px-2">
+                <input
+                  type="checkbox"
+                  className="toggle h-3 w-5"
+                  checked={theme === "dark"}
+                  onChange={(e) => handleTheme(e.target.checked)}
+                />
+                <span className="text-xs">{theme === "dark" ? "Dark Mode" : "Light Mode"}</span>
+              </label>
+
+
               <li>
-                <a>
-                  {" "}
-                  <FaGear /> Settings
-                </a>
+                <a>{" "}<FaGear />Settings</a>
               </li>
+
               <li>
-                <button
-                  onClick={signOutUser}
-                  className="btn btn-xs text-left bg-linear-to-r from-pink-500 to-red-500 text-white"
-                >
-                  <IoLogOut /> Logout
-                </button>
+                <button onClick={signOutUser} className="btn btn-xs text-left bg-linear-to-r from-pink-500 to-red-500 text-white">
+                  <IoLogOut />Logout</button>
               </li>
+
             </ul>
           </div>
         ) : (
