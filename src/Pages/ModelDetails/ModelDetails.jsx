@@ -120,6 +120,25 @@ const ModelDetails = () => {
   // }
 
 
+  const handleDownload = () => {
+    fetch(`http://localhost:3000/downloads`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...model, downloaded_by: user.email })
+    }).then(res => res.json())
+      .then(data => {
+        console.log(data)
+        toast.success("Successfully Downloaded!!")
+      })
+      .catch(error => {
+        console.log(error.message)
+      })
+
+  }
+
+
   useEffect(() => {
     fetch(`http://localhost:3000/models/${id}`, {
       headers: {
@@ -213,7 +232,7 @@ const ModelDetails = () => {
                 Update Model
               </Link>
               <button
-                // onClick={handleDownload}
+                onClick={handleDownload}
                 className="btn btn-secondary rounded-full"
               >
                 Download
