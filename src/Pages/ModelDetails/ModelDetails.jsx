@@ -6,13 +6,15 @@ import { AuthContext } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 
 const ModelDetails = () => {
-  // const data = useLoaderData();
-  // const model = data.result;
   const navigate = useNavigate();
   const { id } = useParams();
   const [model, setModel] = useState({});
   const [loading, setLoading] = useState(true);
   const { user } = use(AuthContext);
+  
+  
+  // const data = useLoaderData();
+  // const model = data.result;
   // const navigate = useNavigate();
   // const { id } = useParams();
   // const [model, setModel] = useState({});
@@ -121,22 +123,37 @@ const ModelDetails = () => {
 
 
   const handleDownload = () => {
-    fetch(`http://localhost:3000/downloads`, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...model, downloaded_by: user.email })
-    }).then(res => res.json())
-      .then(data => {
-        console.log(data)
-        toast.success("Successfully Downloaded!!")
-      })
-      .catch(error => {
-        console.log(error.message)
-      })
+    if (!model._id || !user?.email) return;
 
-  }
+    const finalDownload = {
+      model_id: model._id,      // store original model ID
+      name: model.name,
+      category: model.category,
+      downloads: model.downloads,
+      created_by: model.created_by,
+      thumbnail: model.thumbnail,
+      description: model.description,
+      created_at: new Date(),
+      downloaded_by: user.email,
+    };
+
+    fetch(`http://localhost:3000/downloads/${model._id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(finalDownload),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // update local state to reflect new download count
+        setModel((prev) => ({
+          ...prev,
+          downloads: prev.downloads + 1,
+        }));
+        toast.success("Downloaded successfully!");
+      })
+      .catch((err) => console.error(err));
+  };
+
 
 
   useEffect(() => {
@@ -149,7 +166,7 @@ const ModelDetails = () => {
         setModel(data.result);
         setLoading(false);
       })
-  }, [])
+  }, [user, id])
 
 
   const handleDlete = () => {
