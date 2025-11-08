@@ -127,7 +127,6 @@ const ModelDetails = () => {
       }
     }).then(res => res.json())
       .then(data => {
-        console.log(data)
         setModel(data.result);
         setLoading(false);
       })

@@ -1,10 +1,11 @@
 import toast from "react-hot-toast";
 import { useLoaderData } from "react-router";
+import { BeatLoader } from "react-spinners";
 import Swal from "sweetalert2";
 
 const UpdateModel = () => {
   const data = useLoaderData();
-  const model = data.result;
+  const model = data?.result;
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -56,6 +57,13 @@ const UpdateModel = () => {
       .catch(error => {
         console.log(error.message)
       })
+  }
+  if (!model) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <BeatLoader color="#db2777" />
+      </div>
+    );
   }
 
   return (
@@ -140,3 +148,8 @@ const UpdateModel = () => {
 };
 
 export default UpdateModel;
+
+
+
+
+
