@@ -7,23 +7,6 @@ const MyModels = () => {
     const [models, setModels] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // useEffect(()=> {
-    //     fetch(`https://3d-model-server.vercel.app/my-models?email=${user.email}`, {
-    //         headers: {
-    //             authorization: `Bearer ${user.accessToken}`
-    //         }
-    //     })
-    //     .then(res=> res.json())
-    //     .then(data=> {
-
-    //         setModels(data)
-    //         setLoading(false)
-    //     })
-    // }, [user])
-    // if(loading) {
-    //     return <div> Please wait ... Loading...</div>
-    // }
-
     useEffect(() => {
         fetch(`http://localhost:3000/my-models?email=${user.email}`, {
             headers: {
