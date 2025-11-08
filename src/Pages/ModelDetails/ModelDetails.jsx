@@ -188,7 +188,7 @@ const ModelDetails = () => {
           </div>
 
           <div className="flex flex-col justify-center space-y-4 w-full md:w-1/2">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
+            <h1 className="text-3xl md:text-4xl font-black bg-linear-to-r from-pink-500 to-red-600 bg-clip-text text-transparent">
               {model.name}
             </h1>
 
