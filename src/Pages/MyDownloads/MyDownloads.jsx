@@ -9,7 +9,7 @@ const MyDownloads = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/my-downloads?email=${user.email}`, {
+    fetch(`https://3d-model-server-two.vercel.app/my-downloads?email=${user.email}`, {
       headers: { authorization: `Bearer ${user.accessToken}` },
     })
       .then((res) => res.json())

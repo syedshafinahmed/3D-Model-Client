@@ -1,11 +1,16 @@
+import { use, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate, useParams } from "react-router";
 import { BeatLoader } from "react-spinners";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../context/AuthContext";
 
 const UpdateModel = () => {
-  const data = useLoaderData();
-  const model = data?.result;
+  const { user } = use(AuthContext)
+  const navigate = useNavigate();
+  const { id } = useParams()
+  const [model, setModel] = useState({});
+  // const [loading, setLoading] = useState(false);
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -34,6 +39,22 @@ const UpdateModel = () => {
   //     });
   // };
 
+
+
+  useEffect(() => {
+    fetch(`https://3d-model-server-two.vercel.app/models/${id}`, {
+      headers: {
+        authorization: `Bearer ${user.accessToken}`
+      }
+    }).then(res => res.json())
+      .then(data => {
+        setModel(data.result);
+        // setLoading(false);
+      })
+  }, [user, id])
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = {
@@ -43,7 +64,7 @@ const UpdateModel = () => {
       thumbnail: e.target.thumbnail.value,
     }
 
-    fetch(`http://localhost:3000/models/${model._id}`, {
+    fetch(`https://3d-model-server-two.vercel.app/models/${model._id}`, {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json',
@@ -51,8 +72,8 @@ const UpdateModel = () => {
       body: JSON.stringify(formData)
     }).then(res => res.json())
       .then(data => {
-        console.log(data)
-        toast.success('Successfully updated!')
+        toast.success('Successfully updated!');
+        navigate('/all-models');
       })
       .catch(error => {
         console.log(error.message)

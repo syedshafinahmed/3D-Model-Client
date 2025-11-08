@@ -29,7 +29,7 @@ const AllModels = () => {
     e.preventDefault();
     const search = e.target.search.value;
     setLoading(true);
-    fetch(`http://localhost:3000/search?search=${search}`)
+    fetch(`https://3d-model-server-two.vercel.app/search?search=${search}`)
       .then(res => res.json())
       .then(data => {
         // console.log(data)

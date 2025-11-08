@@ -54,7 +54,7 @@ const AddModal = () => {
       created_by: user.email
     }
 
-    fetch('http://localhost:3000/models', {
+    fetch('https://3d-model-server-two.vercel.app/models', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
